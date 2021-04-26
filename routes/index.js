@@ -92,11 +92,60 @@ router.post('/callback', async (req, res, next) => {
 
 	switch (value) {
 		case 'question_for_sora':
-			await libKakaoWork.sendMessage(sora.from_sora(message.conversation_id));
+			await libKakaoWork.sendMessage(sora.from_sora(actions.question, message.conversation_id));
 			break;
 			
 		case 'start_sora':
 			await libKakaoWork.sendMessage(sora.start_sora(message.conversation_id));
+			break;
+			
+		case 'start_ddangpago':
+			await libKakaoWork.sendMessage({
+				conversationId: message.conversation_id,
+				text: '땅파고 메시지',
+				blocks: [
+					{
+						type: 'header',
+						text: '땅파고👷',
+						style: 'yellow',
+					},
+					{
+						type: 'button',
+						text: '마법의 소라고동',
+						action_type: 'submit_action',
+						action_name: 'start_sora',
+						value: 'start_sora',
+						style: 'default',
+					},
+					{
+						type: 'button',
+						text: '한국인만 알아볼수 있는 번역기',
+						action_type: 'call_modal',
+						value: 'korean_translator',
+						style: 'default',
+					},
+					{
+						type: 'button',
+						text: '피보나치킨',
+						style: 'default',
+					},
+					{
+						type: 'button',
+						text: '퇴근시간 타이머',
+						style: 'default',
+					},
+					{
+						type: 'button',
+						text: '기원',
+						style: 'default',
+					},
+					{
+						type: 'button',
+						text: '운세 뽑기',
+						style: 'default',
+					},
+				],
+			});
 			break;
 		default:
 	}

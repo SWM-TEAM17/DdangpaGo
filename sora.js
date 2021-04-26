@@ -20,7 +20,7 @@ exports.ask_sora_modal = {
 		},
 };
 
-exports.from_sora = function(conversation_id) {
+exports.from_sora = function(question, conversation_id) {
 	let answer = [
 				'*_안 돼._*',
 				'*_가만히 있어._*',
@@ -47,8 +47,26 @@ exports.from_sora = function(conversation_id) {
 					},
 					{
 						type: 'text',
-						text: answer[no],
+						text: '나: ' + question + '\n고동: ' + answer[no],
 						markdown: true,
+					},
+					{
+						type: "divider"
+					},
+					{
+						type: 'button',
+						action_type: 'call_modal',
+						value: 'ask_sora',
+						text: '다시 물어보기',
+						style: 'default',
+					},
+					{
+						type: 'button',
+						action_type: 'submit_action',
+						action_name: 'start_ddangpago',
+						value: 'start_ddangpago',
+						text: '땅파고 기능 더보기',
+						style: 'default',
 					},
 				],
 			};
