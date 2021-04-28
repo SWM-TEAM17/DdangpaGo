@@ -4,7 +4,9 @@ const router = express.Router();
 
 const libKakaoWork = require('../libs/kakaoWork');
 
-const sora = require('../sora');
+const godongController = require('../controllers/godong');
+const blocks = require('../blocks/main');
+//const godong = require('../godong');
 
 router.get('/', async (req, res, next) => {
 	// 유저 목록 검색 (1)
@@ -18,53 +20,7 @@ router.get('/', async (req, res, next) => {
 	// 생성된 채팅방에 메세지 전송 (3)
 	const messages = await Promise.all([
 		conversations.map((conversation) =>
-			libKakaoWork.sendMessage({
-				conversationId: conversation.id,
-				text: '땅파고 메시지',
-				blocks: [
-					{
-						type: 'header',
-						text: '땅파고👷',
-						style: 'yellow',
-					},
-					{
-						type: 'button',
-						text: '마법의 소라고동',
-						action_type: 'submit_action',
-						action_name: 'start_sora',
-						value: 'start_sora',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '한국인만 알아볼수 있는 번역기',
-						action_type: 'call_modal',
-						value: 'korean_translator',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '피보나치킨',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '퇴근시간 타이머',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '기원',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '운세 뽑기',
-						style: 'default',
-					},
-				],
-			})
-		),
+				libKakaoWork.sendMessage(main_block_to(conversation.id)))
 	]);
 
 	res.json({
@@ -78,79 +34,42 @@ router.post('/request', async (req, res, next) => {
 	const { message, value } = req.body;
 
 	switch (value) {
-		case 'ask_sora':
-			return res.json(sora.ask_sora_modal);
+		case 'ask_godong':
+			try {
+				return godongController.request_controller({req, res, next});
+			} catch (e) {
+				console.log(e);
+				return res.json({});
+			}
 			break;
 		default:
 	}
-
-	res.json({});
 });
 
 router.post('/callback', async (req, res, next) => {
 	const { message, actions, action_time, value } = req.body;
 
 	switch (value) {
-		case 'question_for_sora':
-			await libKakaoWork.sendMessage(sora.from_sora(actions.question, message.conversation_id));
+		case 'question_for_godong':			
+		case 'start_godong':
+			try {
+				let _ = await godongController.callback_controller({req, res, next});
+			} catch (e) {
+				console.log(e);
+				res.json({});
+			}
 			break;
-			
-		case 'start_sora':
-			await libKakaoWork.sendMessage(sora.start_sora(message.conversation_id));
-			break;
-			
 		case 'start_ddangpago':
-			await libKakaoWork.sendMessage({
-				conversationId: message.conversation_id,
-				text: '땅파고 메시지',
-				blocks: [
-					{
-						type: 'header',
-						text: '땅파고👷',
-						style: 'yellow',
-					},
-					{
-						type: 'button',
-						text: '마법의 소라고동',
-						action_type: 'submit_action',
-						action_name: 'start_sora',
-						value: 'start_sora',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '한국인만 알아볼수 있는 번역기',
-						action_type: 'call_modal',
-						value: 'korean_translator',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '피보나치킨',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '퇴근시간 타이머',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '기원',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '운세 뽑기',
-						style: 'default',
-					},
-				],
-			});
+			await libKakaoWork.sendMessage(main_block_to(message.conversation_id));
 			break;
 		default:
 	}
-
-	res.json({ result: true });
 });
+
+function main_block_to(conversation_id) {
+	let main_block = blocks.ddanpago_main_block;
+	main_block.conversationId = conversation_id;
+	return main_block;
+}
 
 module.exports = router;
