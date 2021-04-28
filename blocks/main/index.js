@@ -32,9 +32,9 @@ exports.ddanpago_main_block = {
 				{
 					type: 'button',
 					text: '퇴근시간 타이머',
-					action_type: 'submit_action',
+					action_type: 'call_modal',
 					action_name: 'go_home_timer',
-					value: 'go_home_timer',
+					value: 'timer',
 					style: 'default',
 				},
 			],
