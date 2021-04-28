@@ -1,28 +1,42 @@
 // routes/index.js
 const express = require('express');
+const Config = require('config');
 const router = express.Router();
 
+const go_home_timerController = require('../controllers/go_home_timer');
+
 const libKakaoWork = require('../libs/kakaoWork');
+const unsaeController = require('../controllers/unsae');
+const mainBlock = require('../blocks/main');
+const mainController = require('../controllers/main');
+const hopeController = require('../controllers/hope');
+const transController = require('../controllers/translator/translator.js');
+const mongoose = require('mongoose');
+const { User } = require('../models/user');
 
 const godongController = require('../controllers/godong');
 const blocks = require('../blocks/main');
 //const godong = require('../godong');
 
 router.get('/', async (req, res, next) => {
-	// 유저 목록 검색 (1)
+	
 	const users = await libKakaoWork.getUserList();
 
-	// 검색된 모든 유저에게 각각 채팅방 생성 (2)
+
 	const conversations = await Promise.all(
 		users.map((user) => libKakaoWork.openConversations({ userId: user.id }))
 	);
 
+	console.log(conversations);
 	// 생성된 채팅방에 메세지 전송 (3)
 	const messages = await Promise.all([
-		conversations.map((conversation) =>
-				libKakaoWork.sendMessage(main_block_to(conversation.id)))
+		conversations.map((conversation) => {
+			let tmpblock = mainBlock.ddanpago_main_block;
+			tmpblock.conversationId = conversation.id;
+			libKakaoWork.sendMessage(tmpblock);
+		}),
 	]);
-
+  
 	res.json({
 		users,
 		conversations,
@@ -30,46 +44,68 @@ router.get('/', async (req, res, next) => {
 	});
 });
 
+// routes/index.js 모달
 router.post('/request', async (req, res, next) => {
-	const { message, value } = req.body;
+	const { message, action_time, react_user_id, value } = req.body;
+	console.log(req.body);
 
-	switch (value) {
-		case 'ask_godong':
-			try {
-				return godongController.request_controller({req, res, next});
-			} catch (e) {
-				console.log(e);
-				return res.json({});
-			}
-			break;
-		default:
+	try {
+		switch (value.slice(0, 4)) {
+			case 'hope':
+				await hopeController.hope_modal({ req, res, next });
+				break;
+			case 'tran':
+				await transController.trans_modal({ req, res, next });
+				break;
+      case 'time':
+			  option = go_home_timerController.option;
+			  return res.json({
+				  view: go_home_timerController.timer_post_request_message
+			  });
+			  break;
+      case 'ask_':
+        await godongController.request_controller({req, res, next});
+			default:
+		}
+	} catch (e) {
+		console.log(e);
 	}
+
+	return;
 });
 
+// routes/index.js
 router.post('/callback', async (req, res, next) => {
-	const { message, actions, action_time, value } = req.body;
+	const { message, actions, action_time, react_user_id, value } = req.body; // 설문조사 결과 확인 (2)
+	console.log(req.body);
 
-	switch (value) {
-		case 'question_for_godong':			
-		case 'start_godong':
-			try {
-				let _ = await godongController.callback_controller({req, res, next});
-			} catch (e) {
-				console.log(e);
-				res.json({});
-			}
-			break;
-		case 'start_ddangpago':
-			await libKakaoWork.sendMessage(main_block_to(message.conversation_id));
-			break;
-		default:
+	try {
+		switch (value.slice(0, 4)) {
+			case 'menu':
+				await mainController.main_message({ req, res, next });
+				break;
+			case 'hope':
+				await hopeController.hope_message({ req, res, next });
+				break;
+			case 'tran':
+				await transController.trans_message({ req, res, next });
+				break;
+      case 'unsa':
+        await unsaeController.taro_controller({req, res, next});	
+        break;
+      case 'time':
+			  await go_home_timerController.timer_controller({ req, res, next });
+			  break;
+      case 'question_for_godong':	
+		  case 'start_godong':
+				await godongController.callback_controller({req, res, next});
+        break;
+			default:
+		}
+	} catch (e) {
+		console.log(e);
 	}
-});
 
-function main_block_to(conversation_id) {
-	let main_block = blocks.ddanpago_main_block;
-	main_block.conversationId = conversation_id;
-	return main_block;
-}
+});
 
 module.exports = router;
