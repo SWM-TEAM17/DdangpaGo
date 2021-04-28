@@ -6,7 +6,7 @@ exports.request_controller = async ({ req, res, next }) => {
 	let response = {};
 	
 	switch(value) {
-		case 'ask_godong':
+		case 'godong_ask':
 			response = blocks.ask_modal;
 			break;
 		default:
@@ -22,10 +22,10 @@ exports.callback_controller = async ({ req, res, next }) => {
 	let response = {};
 	
 	switch(value) {
-		case 'start_godong':
+		case 'godong_start':
 			response = blocks.start_message;
 			break;
-		case 'question_for_godong':
+		case 'godong_question':
 			response = blocks.answer_message;
 			response.blocks[1].text = '나: ' + actions.question + '\n';
 			set_answer(response);
@@ -53,7 +53,7 @@ function set_answer(response) {
 				'다시 한 번 물어봐.',
 				'돼.'
 			];
-	let url = "https://ddangpago-test-vrzpe.run.goorm.io/godong/answer";
+	let url = "https://swm-chatbot-mptw3r-mxrmlo.run.goorm.io/godong/answer";
 	var no = Math.floor(Math.random() * 10) % 6;
 	
 	response.text = answer[no];
