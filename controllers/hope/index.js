@@ -33,8 +33,9 @@ exports.hope_modal = async ({ req, res, next }) => {
 			const time_last = user.last_hope ? user.last_hope.split('T') : [];
 			const time_now = action_time.split('T');
 
+			console.log(`last hope time of ${user.name} is ${user.last_hope}, ${time_last}`);
 			let hopable = false;
-			if (time_last == '') {
+			if (time_last == []) {
 				hopable = true;
 			} else {
 				const date_last = Number(time_last[0].split('-')[2]);
@@ -70,12 +71,6 @@ exports.hope_modal = async ({ req, res, next }) => {
 	}
 
 	response.conversationId = message.conversation_id;
-
-	// try {
-	// 	await libKakaoWork.sendMessage(response);
-	// } catch (error) {
-	// 	console.log(error);
-	// }
 
 	return res.json(response);
 };
