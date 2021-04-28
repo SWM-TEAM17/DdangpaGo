@@ -2,7 +2,11 @@
 const express = require('express');
 const Config = require('config');
 const router = express.Router();
+
+const go_home_timerController = require('../controllers/go_home_timer');
+
 const libKakaoWork = require('../libs/kakaoWork');
+const unsaeController = require('../controllers/unsae');
 const mainBlock = require('../blocks/main');
 const mainController = require('../controllers/main');
 const hopeController = require('../controllers/hope');
@@ -11,11 +15,15 @@ const fiboController = require('../controllers/fibo/fibo.js');
 const mongoose = require('mongoose');
 const { User } = require('../models/user');
 
+const godongController = require('../controllers/godong');
+const blocks = require('../blocks/main');
+//const godong = require('../godong');
+
 router.get('/', async (req, res, next) => {
-	// 유저 목록 검색 (1)
+	
 	const users = await libKakaoWork.getUserList();
 
-	// 검색된 모든 유저에게 각각 채팅방 생성 (2)
+
 	const conversations = await Promise.all(
 		users.map((user) => libKakaoWork.openConversations({ userId: user.id }))
 	);
@@ -29,8 +37,7 @@ router.get('/', async (req, res, next) => {
 			libKakaoWork.sendMessage(tmpblock);
 		}),
 	]);
-
-	// 응답값은 자유롭게 작성하셔도 됩니다.
+  
 	res.json({
 		users,
 		conversations,
@@ -50,10 +57,21 @@ router.post('/request', async (req, res, next) => {
 				break;
 			case 'tran':
 				await transController.trans_modal({ req, res, next });
+<<<<<<< HEAD
 				break;
 			case 'fibo':
 				await fiboController.fibo_modal({ req, res, next });
+=======
+>>>>>>> 42a40786e1611478da2c9bff2f4092b346f54a07
 				break;
+      case 'time':
+			  option = go_home_timerController.option;
+			  return res.json({
+				  view: go_home_timerController.timer_post_request_message
+			  });
+			  break;
+      case 'ask_':
+        await godongController.request_controller({req, res, next});
 			default:
 		}
 	} catch (e) {
@@ -79,16 +97,28 @@ router.post('/callback', async (req, res, next) => {
 			case 'tran':
 				await transController.trans_message({ req, res, next });
 				break;
+<<<<<<< HEAD
 			case 'fibo':
 				await fiboController.fibo_message({ req, res, next });
 				break;
+=======
+      case 'unsa':
+        await unsaeController.taro_controller({req, res, next});	
+        break;
+      case 'time':
+			  await go_home_timerController.timer_controller({ req, res, next });
+			  break;
+      case 'question_for_godong':	
+		  case 'start_godong':
+				await godongController.callback_controller({req, res, next});
+        break;
+>>>>>>> 42a40786e1611478da2c9bff2f4092b346f54a07
 			default:
 		}
 	} catch (e) {
 		console.log(e);
 	}
 
-	res.json({ result: true });
 });
 
 module.exports = router;

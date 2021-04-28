@@ -6,8 +6,8 @@ exports.ddanpago_main_block = {
 			type: 'button',
 			text: '마법의 소라고동',
 			action_type: 'submit_action',
-			action_name: 'magic_godong',
-			value: 'magic_godong',
+			action_name: 'start_godong',
+			value: 'start_godong',
 			style: 'default',
 		},
 		{

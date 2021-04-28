@@ -1,0 +1,66 @@
+const libKakaoWork = require('../../libs/kakaoWork');
+const blocks = require('../../blocks/godong');
+
+exports.request_controller = async ({ req, res, next }) => {
+	const { message, value } = req.body;
+	let response = {};
+	
+	switch(value) {
+		case 'ask_godong':
+			response = blocks.ask_modal;
+			break;
+		default:
+	}
+	
+	response.conversationId = message.conversation_id;
+	
+	return res.json(response);
+}
+
+exports.callback_controller = async ({ req, res, next }) => {
+	const { message, actions, action_time, value } = req.body;
+	let response = {};
+	
+	switch(value) {
+		case 'start_godong':
+			response = blocks.start_message;
+			break;
+		case 'question_for_godong':
+			response = blocks.answer_message;
+			response.blocks[1].text = '나: ' + actions.question + '\n';
+			set_answer(response);
+			break;
+		default:
+	}
+	
+	response.conversationId = message.conversation_id;
+	
+	try {
+		await libKakaoWork.sendMessage(response);
+	} catch (error) {
+		console.log(error);
+	}
+	
+	return res.json(response);
+}
+
+function set_answer(response) {
+	let answer = [
+				'안 돼.',
+				'가만히 있어.',
+				'멈춰.',
+				'그럼.',
+				'다시 한 번 물어봐.',
+				'돼.'
+			];
+	let url = "https://ddangpago-test-vrzpe.run.goorm.io/godong/answer";
+	var no = Math.floor(Math.random() * 10) % 6;
+	
+	response.text = answer[no];
+	response.blocks[0].url = url + no + ".jpg";
+	response.blocks[1].text += '고동: ' + add_markdown(answer[no]);
+}
+	
+function add_markdown(str) {
+	return "*_" + str + "_*";
+}
