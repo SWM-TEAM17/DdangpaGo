@@ -78,5 +78,6 @@ const get_taro_result = async ({ selected_num, day }) => {
 		data = data.substring(1, data.length);
 	}
 	taro_result = JSON.parse(data);
+	console.log(taro_result);
 	return taro_result;
 };

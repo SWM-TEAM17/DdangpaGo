@@ -58,8 +58,6 @@ exports.timer_controller = async ({ req, res, next }) => {
 	let seconds = today.getSeconds(); // 초
 	let milliseconds = today.getMilliseconds();
 	const { message, action_name, action_time, value } = req.body;
-	console.log(req.body);
-	console.log(req.body.actions.time);
 	ti = req.body.actions.time;
 	t_t = req.body.actions.time_type;
 	var remain;

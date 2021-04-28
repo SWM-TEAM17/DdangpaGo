@@ -3,7 +3,7 @@ exports.ask_modal = {
 			title: '마법의 소라고동',
 			accept: '확인',
 			decline: '취소',
-			value: 'question_for_godong',
+			value: 'godong_question',
 			blocks: [
 				{
 					type: 'label',
@@ -26,12 +26,12 @@ exports.start_message = {
 	blocks: [
 		{
 		  "type": "image_link",
-		  "url": "https://ddangpago-test-vrzpe.run.goorm.io/godong/start.jpg",
+		  "url": "https://swm-chatbot-mptw3r-mxrmlo.run.goorm.io/godong/start.jpg",
 		},
 		{
 			type: 'button',
 			action_type: 'call_modal',
-			value: 'ask_godong',
+			value: 'godong_ask',
 			text: '소라고동에게 물어보기',
 			style: 'default',
 		},
@@ -60,15 +60,15 @@ exports.answer_message = {
 				{
 					type: 'button',
 					action_type: 'call_modal',
-					value: 'ask_godong',
+					value: 'godong_ask',
 					text: '다시 물어보기',
 					style: 'default',
 				},
 				{
 					type: 'button',
 					action_type: 'submit_action',
-					action_name: 'start_ddangpago',
-					value: 'start_ddangpago',
+					action_name: 'menu',
+					value: 'menu',
 					text: '땅파고 기능 더보기',
 					style: 'default',
 				},

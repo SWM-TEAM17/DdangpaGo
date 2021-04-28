@@ -289,7 +289,7 @@ exports.taro_result_block = {
 			action_type: 'submit_action',
 			action_name: 'back_to_main',
 			value: 'unsae',
-		    style: 'default'
+		  style: 'default'
 		}
 	],
 };
