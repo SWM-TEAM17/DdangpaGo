@@ -67,8 +67,10 @@ const get_taro_result = async ({ selected_num, day }) => {
 		responseType: 'json',
 		params: { p: 'tarot', taroSelectedNum: selected_num, day: day },
 	});
-
+	console.log(response.data);
 	let data = response.data.replace('(', '').replace(')', '');
+	console.log(data);
 	taro_result = JSON.parse(data);
+	console.log(taro_result);
 	return taro_result;
 };

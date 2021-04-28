@@ -20,9 +20,7 @@ const blocks = require('../blocks/main');
 //const godong = require('../godong');
 
 router.get('/', async (req, res, next) => {
-	
 	const users = await libKakaoWork.getUserList();
-
 
 	const conversations = await Promise.all(
 		users.map((user) => libKakaoWork.openConversations({ userId: user.id }))
@@ -37,7 +35,7 @@ router.get('/', async (req, res, next) => {
 			libKakaoWork.sendMessage(tmpblock);
 		}),
 	]);
-  
+
 	res.json({
 		users,
 		conversations,
@@ -57,21 +55,19 @@ router.post('/request', async (req, res, next) => {
 				break;
 			case 'tran':
 				await transController.trans_modal({ req, res, next });
-<<<<<<< HEAD
 				break;
 			case 'fibo':
 				await fiboController.fibo_modal({ req, res, next });
-=======
->>>>>>> 42a40786e1611478da2c9bff2f4092b346f54a07
 				break;
-      case 'time':
-			  option = go_home_timerController.option;
-			  return res.json({
-				  view: go_home_timerController.timer_post_request_message
-			  });
-			  break;
-      case 'ask_':
-        await godongController.request_controller({req, res, next});
+			case 'time':
+				option = go_home_timerController.option;
+				return res.json({
+					view: go_home_timerController.timer_post_request_message,
+				});
+				break;
+			case 'godo':
+				await godongController.request_controller({ req, res, next });
+				break;
 			default:
 		}
 	} catch (e) {
@@ -97,28 +93,23 @@ router.post('/callback', async (req, res, next) => {
 			case 'tran':
 				await transController.trans_message({ req, res, next });
 				break;
-<<<<<<< HEAD
 			case 'fibo':
 				await fiboController.fibo_message({ req, res, next });
 				break;
-=======
-      case 'unsa':
-        await unsaeController.taro_controller({req, res, next});	
-        break;
-      case 'time':
-			  await go_home_timerController.timer_controller({ req, res, next });
-			  break;
-      case 'question_for_godong':	
-		  case 'start_godong':
-				await godongController.callback_controller({req, res, next});
-        break;
->>>>>>> 42a40786e1611478da2c9bff2f4092b346f54a07
+			case 'unsa':
+				await unsaeController.taro_controller({ req, res, next });
+				break;
+			case 'time':
+				await go_home_timerController.timer_controller({ req, res, next });
+				break;
+			case 'godo':
+				await godongController.callback_controller({ req, res, next });
+				break;
 			default:
 		}
 	} catch (e) {
 		console.log(e);
 	}
-
 });
 
 module.exports = router;

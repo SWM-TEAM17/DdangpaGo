@@ -1,57 +1,6 @@
 const libKakaoWork = require('../../libs/kakaoWork');
 const mainBlock = require('../../blocks/main');
 
-/*
-exports.main_message = (id) => {
-	return {
-		conversationId: id,
-		text: '땅파고 챗봇',
-		blocks: [
-			{
-				type: 'button',
-				text: '마법의 소라고동',
-				style: 'default',
-			},
-			{
-				type: 'button',
-				text: '한국인만 알아볼수 있는 번역기',
-				style: 'default',
-			},
-			{
-				type: 'action',
-				elements: [
-					{
-						type: 'button',
-						action_type: 'call_modal',
-						value: 'fibona_chiken',
-						text: '피보나치킨',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '퇴근시간 타이머',
-						style: 'default',
-					},
-				],
-			},
-			{
-				type: 'action',
-				elements: [
-					{
-						type: 'button',
-						text: '기원',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '운세 뽑기',
-						style: 'default',
-					},
-				],
-			},
-		],
-	};
-};*/
 exports.fibo_modal = async ({ req, res, next }) => {
 	const { message, value } = req.body;
 	console.log("value: "+value);
