@@ -7,6 +7,7 @@ const mainBlock = require('../blocks/main');
 const mainController = require('../controllers/main');
 const hopeController = require('../controllers/hope');
 const transController = require('../controllers/translator/translator.js');
+const fiboController = require('../controllers/fibo/fibo.js');
 const mongoose = require('mongoose');
 const { User } = require('../models/user');
 
@@ -45,10 +46,13 @@ router.post('/request', async (req, res, next) => {
 	try {
 		switch (value.slice(0, 4)) {
 			case 'hope':
-				let _ = await hopeController.hope_modal({ req, res, next });
+				await hopeController.hope_modal({ req, res, next });
 				break;
 			case 'tran':
-				let _1 = await transController.trans_modal({ req, res, next });
+				await transController.trans_modal({ req, res, next });
+				break;
+			case 'fibo':
+				await fiboController.fibo_modal({req, res, next});
 				break;
 			default:
 		}
@@ -74,6 +78,9 @@ router.post('/callback', async (req, res, next) => {
 				break;
 			case 'tran':
 				await transController.trans_message({ req, res, next });
+				break;
+			case 'fibo':
+				await fiboController.fibo_message({ req, res, next});
 				break;
 			default:
 		}

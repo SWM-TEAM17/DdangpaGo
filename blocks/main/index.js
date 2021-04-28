@@ -24,9 +24,9 @@ exports.ddanpago_main_block = {
 				{
 					type: 'button',
 					text: '피보나치킨',
-					action_type: 'submit_action',
-					action_name: 'pibonachicken',
-					value: 'pibonachicken',
+					action_type: 'call_modal',
+					action_name: 'fibona_chiken',
+					value: 'fibona_chiken',
 					style: 'default',
 				},
 				{
