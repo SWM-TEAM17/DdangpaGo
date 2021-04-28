@@ -3,6 +3,7 @@ const express = require('express');
 const Config = require('config');
 const router = express.Router();
 const libKakaoWork = require('../libs/kakaoWork');
+const unsaeController = require('../controllers/unsae');
 const mainBlock = require('../blocks/main');
 const mainController = require('../controllers/main');
 const hopeController = require('../controllers/hope');
@@ -11,10 +12,9 @@ const mongoose = require('mongoose');
 const { User } = require('../models/user');
 
 router.get('/', async (req, res, next) => {
-	// 유저 목록 검색 (1)
+	
 	const users = await libKakaoWork.getUserList();
 
-	// 검색된 모든 유저에게 각각 채팅방 생성 (2)
 	const conversations = await Promise.all(
 		users.map((user) => libKakaoWork.openConversations({ userId: user.id }))
 	);
@@ -28,8 +28,7 @@ router.get('/', async (req, res, next) => {
 			libKakaoWork.sendMessage(tmpblock);
 		}),
 	]);
-
-	// 응답값은 자유롭게 작성하셔도 됩니다.
+	
 	res.json({
 		users,
 		conversations,
@@ -75,13 +74,15 @@ router.post('/callback', async (req, res, next) => {
 			case 'tran':
 				await transController.trans_message({ req, res, next });
 				break;
+      case 'unsa':
+        await unsaeController.taro_controller({req, res, next});	
+        break;
 			default:
 		}
 	} catch (e) {
 		console.log(e);
 	}
 
-	res.json({ result: true });
 });
 
 module.exports = router;
