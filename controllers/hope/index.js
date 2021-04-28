@@ -30,12 +30,11 @@ exports.hope_modal = async ({ req, res, next }) => {
 			// 문제 정보 가져오기
 
 			// 지금 기원할 수 있는지 판단
-			const time_last = user.last_hope ? user.last_hope.split('T') : [];
+			const time_last = user.last_hope ? user.last_hope.split('T') : false;
 			const time_now = action_time.split('T');
 
-			console.log(`last hope time of ${user.name} is ${user.last_hope}, ${time_last}`);
 			let hopable = false;
-			if (time_last == []) {
+			if (!time_last) {
 				hopable = true;
 			} else {
 				const date_last = Number(time_last[0].split('-')[2]);
@@ -47,7 +46,8 @@ exports.hope_modal = async ({ req, res, next }) => {
 			}
 
 			// 기원 문제 풀기 전송
-			if (hopable) {
+			if (true) {
+				// ** 중요 잠시 테스트 때문에 true로 바꿔둠
 				response = hopeBlock.hope_problem_solve_pass_block;
 				response.view.blocks[0].text = `*${user.name}*님은 퇴사 기원 ${user.hope_val}일차 입니다.`;
 			} else {
