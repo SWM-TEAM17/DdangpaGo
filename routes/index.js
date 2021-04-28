@@ -2,6 +2,9 @@
 const express = require('express');
 const Config = require('config');
 const router = express.Router();
+
+const go_home_timerController = require('../controllers/go_home_timer');
+
 const libKakaoWork = require('../libs/kakaoWork');
 const unsaeController = require('../controllers/unsae');
 const mainBlock = require('../blocks/main');
@@ -14,6 +17,7 @@ const { User } = require('../models/user');
 router.get('/', async (req, res, next) => {
 	
 	const users = await libKakaoWork.getUserList();
+
 
 	const conversations = await Promise.all(
 		users.map((user) => libKakaoWork.openConversations({ userId: user.id }))
@@ -38,6 +42,7 @@ router.get('/', async (req, res, next) => {
 
 // routes/index.js 모달
 router.post('/request', async (req, res, next) => {
+
 	const { message, action_time, react_user_id, value } = req.body;
 	console.log(req.body);
 
@@ -49,10 +54,17 @@ router.post('/request', async (req, res, next) => {
 			case 'tran':
 				let _1 = await transController.trans_modal({ req, res, next });
 				break;
+      case 'time':
+			  option = go_home_timerController.option;
+			  return res.json({
+				  view: go_home_timerController.timer_post_request_message
+			  });
+			  break;
 			default:
 		}
 	} catch (e) {
 		console.log(e);
+
 	}
 
 	return;
@@ -60,6 +72,7 @@ router.post('/request', async (req, res, next) => {
 
 // routes/index.js
 router.post('/callback', async (req, res, next) => {
+
 	const { message, actions, action_time, react_user_id, value } = req.body; // 설문조사 결과 확인 (2)
 	console.log(req.body);
 
@@ -77,6 +90,9 @@ router.post('/callback', async (req, res, next) => {
       case 'unsa':
         await unsaeController.taro_controller({req, res, next});	
         break;
+      case 'time':
+			  await go_home_timerController.timer_controller({ req, res, next });
+			  break;
 			default:
 		}
 	} catch (e) {
