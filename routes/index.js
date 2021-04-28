@@ -1,109 +1,104 @@
+// routes/index.js
 const express = require('express');
+const Config = require('config');
 const router = express.Router();
+
 const go_home_timerController = require('../controllers/go_home_timer');
 
 const libKakaoWork = require('../libs/kakaoWork');
+const unsaeController = require('../controllers/unsae');
+const mainBlock = require('../blocks/main');
+const mainController = require('../controllers/main');
+const hopeController = require('../controllers/hope');
+const transController = require('../controllers/translator/translator.js');
+const mongoose = require('mongoose');
+const { User } = require('../models/user');
 
 router.get('/', async (req, res, next) => {
-	// 유저 목록 검색 (1)
+	
 	const users = await libKakaoWork.getUserList();
 
-	// 검색된 모든 유저에게 각각 채팅방 생성 (2)
-	const conversations = await Promise.all(users.map((user) => libKakaoWork.openConversations({ userId: user.id })));
 
+	const conversations = await Promise.all(
+		users.map((user) => libKakaoWork.openConversations({ userId: user.id }))
+	);
+
+	console.log(conversations);
+	// 생성된 채팅방에 메세지 전송 (3)
 	const messages = await Promise.all([
-		conversations.map((conversation) =>
-			libKakaoWork.sendMessage({
-				conversationId: conversation.id,
-				text: '땅파고 메시지',
-				blocks: [
-					{
-						type: 'header',
-						text: '땅파고👷',
-						style: 'blue'
-					},
-					{
-						type: 'button',
-						text: '마법의 소라고동',
-						style: 'default'
-					},
-					{
-						type: 'button',
-						text: '한국인만 알아볼수 있는 번역기',
-						action_type: 'call_modal',
-						value: 'korean_translator',
-						style: 'default'
-					},
-					{
-						type: 'button',
-						text: '피보나치킨',
-						style: 'default'
-					},
-					{
-						type: 'button',
-						text: '퇴근시간 타이머',
-						action_type: 'call_modal',
-						value: 'timer',
-						style: 'default'
-					},
-					{
-						type: 'button',
-						text: '기원',
-						style: 'default'
-					},
-					{
-						type: 'button',
-						text: '운세 뽑기',
-						style: 'default'
-					}
-				]
-			})
-		)
+		conversations.map((conversation) => {
+			let tmpblock = mainBlock.ddanpago_main_block;
+			tmpblock.conversationId = conversation.id;
+			libKakaoWork.sendMessage(tmpblock);
+		}),
 	]);
-	// 응답값은 자유롭게 작성하셔도 됩니다.
+	
 	res.json({
-		result: true
+		users,
+		conversations,
+		messages,
 	});
-
-	/*
-  res.json({
-    users,
-    conversations,
-    messages,
-  });
-  
-  */
 });
 
+// routes/index.js 모달
 router.post('/request', async (req, res, next) => {
-	const { message, value } = req.body;
-	//console.log(req.body);
-	switch (value) {
-		case 'timer':
-			//모달 전송
-			option = go_home_timerController.option;
 
-			return res.json({
-				view: go_home_timerController.timer_post_request_message
-			});
-			break;
-		default:
+	const { message, action_time, react_user_id, value } = req.body;
+	console.log(req.body);
+
+	try {
+		switch (value.slice(0, 4)) {
+			case 'hope':
+				let _ = await hopeController.hope_modal({ req, res, next });
+				break;
+			case 'tran':
+				let _1 = await transController.trans_modal({ req, res, next });
+				break;
+      case 'time':
+			  option = go_home_timerController.option;
+			  return res.json({
+				  view: go_home_timerController.timer_post_request_message
+			  });
+			  break;
+			default:
+		}
+	} catch (e) {
+		console.log(e);
+
 	}
 
-	res.json({});
+	return;
 });
 
+// routes/index.js
 router.post('/callback', async (req, res, next) => {
-	const { message, actions, action_time, value } = req.body;
 
-	switch (value) {
-		case 'timer_results':
-			await go_home_timerController.timer_controller({ req, res, next });
-			break;
-		default:
+	const { message, actions, action_time, react_user_id, value } = req.body; // 설문조사 결과 확인 (2)
+	console.log(req.body);
+
+	try {
+		switch (value.slice(0, 4)) {
+			case 'menu':
+				await mainController.main_message({ req, res, next });
+				break;
+			case 'hope':
+				await hopeController.hope_message({ req, res, next });
+				break;
+			case 'tran':
+				await transController.trans_message({ req, res, next });
+				break;
+      case 'unsa':
+        await unsaeController.taro_controller({req, res, next});	
+        break;
+      case 'time':
+			  await go_home_timerController.timer_controller({ req, res, next });
+			  break;
+			default:
+		}
+	} catch (e) {
+		console.log(e);
 	}
 
-	res.json({ result: true });
 });
 
 module.exports = router;

@@ -35,20 +35,6 @@ app.use(function (err, req, res, next) {
 	res.json({ err });
 });
 
-const mongoose = require('mongoose');
-mongoose
-	.connect(
-		`mongodb+srv://MYS:${Config.keys.mongodb.key}@cluster0.8ka5z.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
-		{
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-			useCreateIndex: true,
-			useFindAndModify: false,
-		}
-	)
-	.then(() => console.log('MongoDB connected...'))
-	.catch((error) => console.log(error));
-
 app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000!'));
 
 module.exports = app;
