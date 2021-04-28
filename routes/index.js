@@ -57,18 +57,15 @@ router.post('/request', async (req, res, next) => {
 				break;
 			case 'tran':
 				await transController.trans_modal({ req, res, next });
-<<<<<<< HEAD
 				break;
 			case 'fibo':
 				await fiboController.fibo_modal({ req, res, next });
-=======
->>>>>>> 42a40786e1611478da2c9bff2f4092b346f54a07
 				break;
-      case 'time':
-			  option = go_home_timerController.option;
-			  return res.json({
-				  view: go_home_timerController.timer_post_request_message
-			  });
+      		case 'time':
+			  	option = go_home_timerController.option;
+			  	return res.json({
+				  	view: go_home_timerController.timer_post_request_message
+			  	});
 			  break;
       case 'ask_':
         await godongController.request_controller({req, res, next});
@@ -97,22 +94,18 @@ router.post('/callback', async (req, res, next) => {
 			case 'tran':
 				await transController.trans_message({ req, res, next });
 				break;
-<<<<<<< HEAD
 			case 'fibo':
 				await fiboController.fibo_message({ req, res, next });
 				break;
-=======
-      case 'unsa':
-        await unsaeController.taro_controller({req, res, next});	
-        break;
-      case 'time':
-			  await go_home_timerController.timer_controller({ req, res, next });
-			  break;
+      		case 'unsa':
+       	 		await unsaeController.taro_controller({req, res, next});				break;
+      		case 'time':
+			  	await go_home_timerController.timer_controller({ req, res, next });
+			  	break;
       case 'question_for_godong':	
 		  case 'start_godong':
 				await godongController.callback_controller({req, res, next});
         break;
->>>>>>> 42a40786e1611478da2c9bff2f4092b346f54a07
 			default:
 		}
 	} catch (e) {
