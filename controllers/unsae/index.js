@@ -61,15 +61,22 @@ const select_random_num = ({ min, max }) => {
 
 const get_taro_result = async ({ selected_num, day }) => {
 	let taro_result = {};
+	console.log('시도중....');
 	const response = await axios({
 		url: 'https://unse.daily.co.kr',
 		method: 'get',
 		responseType: 'json',
 		params: { p: 'tarot', taroSelectedNum: selected_num, day: day },
 	});
-	console.log(response.data);
-	let data = response.data.replace('(', '').replace(')', '');
-	console.log(data);
+	let data = response.data;
+	if (data[data.length - 1] === ')') {
+		// data[data.length - 1] = ''
+		data = data.substring(0, data.length - 1);
+	}
+	if (data[0] === '(') {
+		// data[0] = ''
+		data = data.substring(1, data.length);
+	}
 	taro_result = JSON.parse(data);
 	console.log(taro_result);
 	return taro_result;
