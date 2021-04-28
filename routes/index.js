@@ -52,7 +52,7 @@ router.post('/request', async (req, res, next) => {
 				await transController.trans_modal({ req, res, next });
 				break;
 			case 'fibo':
-				await fiboController.fibo_modal({req, res, next});
+				await fiboController.fibo_modal({ req, res, next });
 				break;
 			default:
 		}
@@ -80,7 +80,7 @@ router.post('/callback', async (req, res, next) => {
 				await transController.trans_message({ req, res, next });
 				break;
 			case 'fibo':
-				await fiboController.fibo_message({ req, res, next});
+				await fiboController.fibo_message({ req, res, next });
 				break;
 			default:
 		}
