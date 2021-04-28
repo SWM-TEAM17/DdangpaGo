@@ -1,6 +1,5 @@
 const libKakaoWork = require('../../libs/kakaoWork');
 const hopeBlock = require('../../blocks/hope');
-const mainBlock = require('../../blocks/main');
 const axios = require('axios');
 const Config = require('config');
 const mongoose = require('mongoose');
@@ -80,9 +79,6 @@ exports.hope_message = async ({ req, res, next }) => {
 	let response = {};
 
 	switch (value) {
-		case 'menu':
-			response = mainBlock.ddanpago_main_block;
-			break;
 		case 'hope_menu':
 			// 데이터베이스에 없으면 새로 등록
 			const found = await User.findOne({ user_id: react_user_id });

@@ -3,6 +3,8 @@ const express = require('express');
 const Config = require('config');
 const router = express.Router();
 const libKakaoWork = require('../libs/kakaoWork');
+const mainBlock = require('../blocks/main');
+const mainController = require('../controllers/main');
 const hopeController = require('../controllers/hope');
 const transController = require('../controllers/translator/translator.js');
 const mongoose = require('mongoose');
@@ -17,62 +19,14 @@ router.get('/', async (req, res, next) => {
 		users.map((user) => libKakaoWork.openConversations({ userId: user.id }))
 	);
 
+	console.log(conversations);
 	// 생성된 채팅방에 메세지 전송 (3)
 	const messages = await Promise.all([
-		conversations.map((conversation) =>
-			libKakaoWork.sendMessage({
-				conversationId: conversation.id,
-				text: 'Push alarm message',
-				blocks: [
-					{
-						type: 'button',
-						text: '마법의 소라고동',
-						style: 'default',
-					},
-					{
-						type: 'button',
-						text: '한국인만 알아볼수 있는 번역기',
-						action_type: 'call_modal',
-						action_name: 'call_translator_modal',
-            		    value: 'trans_modal',
-						style: 'default',
-					},
-					{
-						type: 'action',
-						elements: [
-							{
-								type: 'button',
-								text: '피보나치킨',
-								style: 'default',
-							},
-							{
-								type: 'button',
-								text: '퇴근시간 타이머',
-								style: 'default',
-							},
-						],
-					},
-					{
-						type: 'action',
-						elements: [
-							{
-								type: 'button',
-								text: '기원',
-								action_type: 'submit_action',
-								action_name: 'hope_menu',
-								value: 'hope_menu',
-								style: 'default',
-							},
-							{
-								type: 'button',
-								text: '운세 뽑기',
-								style: 'default',
-							},
-						],
-					},
-				],
-			})
-		),
+		conversations.map((conversation) => {
+			let tmpblock = mainBlock.ddanpago_main_block;
+			tmpblock.conversationId = conversation.id;
+			libKakaoWork.sendMessage(tmpblock);
+		}),
 	]);
 
 	// 응답값은 자유롭게 작성하셔도 됩니다.
@@ -93,7 +47,7 @@ router.post('/request', async (req, res, next) => {
 			case 'hope':
 				let _ = await hopeController.hope_modal({ req, res, next });
 				break;
-			case 'trans':
+			case 'tran':
 				let _1 = await transController.trans_modal({ req, res, next });
 				break;
 			default:
@@ -113,13 +67,13 @@ router.post('/callback', async (req, res, next) => {
 	try {
 		switch (value.slice(0, 4)) {
 			case 'menu':
-				let _ = await hopeController.hope_message({ req, res, next });
+				await mainController.main_message({ req, res, next });
 				break;
 			case 'hope':
-				let _1 = await hopeController.hope_message({ req, res, next });
+				await hopeController.hope_message({ req, res, next });
 				break;
-			case 'trans':
-				let _2 = await transController.trans_message({ req, res, next });
+			case 'tran':
+				await transController.trans_message({ req, res, next });
 				break;
 			default:
 		}
