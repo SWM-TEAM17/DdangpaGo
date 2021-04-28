@@ -14,6 +14,10 @@ const transController = require('../controllers/translator/translator.js');
 const mongoose = require('mongoose');
 const { User } = require('../models/user');
 
+const godongController = require('../controllers/godong');
+const blocks = require('../blocks/main');
+//const godong = require('../godong');
+
 router.get('/', async (req, res, next) => {
 	
 	const users = await libKakaoWork.getUserList();
@@ -32,7 +36,7 @@ router.get('/', async (req, res, next) => {
 			libKakaoWork.sendMessage(tmpblock);
 		}),
 	]);
-	
+  
 	res.json({
 		users,
 		conversations,
@@ -42,17 +46,16 @@ router.get('/', async (req, res, next) => {
 
 // routes/index.js 모달
 router.post('/request', async (req, res, next) => {
-
 	const { message, action_time, react_user_id, value } = req.body;
 	console.log(req.body);
 
 	try {
 		switch (value.slice(0, 4)) {
 			case 'hope':
-				let _ = await hopeController.hope_modal({ req, res, next });
+				await hopeController.hope_modal({ req, res, next });
 				break;
 			case 'tran':
-				let _1 = await transController.trans_modal({ req, res, next });
+				await transController.trans_modal({ req, res, next });
 				break;
       case 'time':
 			  option = go_home_timerController.option;
@@ -60,11 +63,12 @@ router.post('/request', async (req, res, next) => {
 				  view: go_home_timerController.timer_post_request_message
 			  });
 			  break;
+      case 'ask_':
+        await godongController.request_controller({req, res, next});
 			default:
 		}
 	} catch (e) {
 		console.log(e);
-
 	}
 
 	return;
@@ -72,7 +76,6 @@ router.post('/request', async (req, res, next) => {
 
 // routes/index.js
 router.post('/callback', async (req, res, next) => {
-
 	const { message, actions, action_time, react_user_id, value } = req.body; // 설문조사 결과 확인 (2)
 	console.log(req.body);
 
@@ -93,6 +96,10 @@ router.post('/callback', async (req, res, next) => {
       case 'time':
 			  await go_home_timerController.timer_controller({ req, res, next });
 			  break;
+      case 'question_for_godong':	
+		  case 'start_godong':
+				await godongController.callback_controller({req, res, next});
+        break;
 			default:
 		}
 	} catch (e) {
