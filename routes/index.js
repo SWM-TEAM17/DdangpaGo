@@ -4,6 +4,7 @@ const Config = require('config');
 const router = express.Router();
 const libKakaoWork = require('../libs/kakaoWork');
 const hopeController = require('../controllers/hope');
+const transController = require('../controllers/translator/translator.js');
 const mongoose = require('mongoose');
 const { User } = require('../models/user');
 
@@ -31,6 +32,9 @@ router.get('/', async (req, res, next) => {
 					{
 						type: 'button',
 						text: '한국인만 알아볼수 있는 번역기',
+						action_type: 'call_modal',
+						action_name: 'call_translator_modal',
+            		    value: 'trans_modal',
 						style: 'default',
 					},
 					{
@@ -89,6 +93,9 @@ router.post('/request', async (req, res, next) => {
 			case 'hope':
 				let _ = await hopeController.hope_modal({ req, res, next });
 				break;
+			case 'trans':
+				let _1 = await transController.trans_modal({ req, res, next });
+				break;
 			default:
 		}
 	} catch (e) {
@@ -106,10 +113,13 @@ router.post('/callback', async (req, res, next) => {
 	try {
 		switch (value.slice(0, 4)) {
 			case 'menu':
-				let _1 = await hopeController.hope_message({ req, res, next });
+				let _ = await hopeController.hope_message({ req, res, next });
 				break;
 			case 'hope':
-				let _ = await hopeController.hope_message({ req, res, next });
+				let _1 = await hopeController.hope_message({ req, res, next });
+				break;
+			case 'trans':
+				let _2 = await transController.trans_message({ req, res, next });
 				break;
 			default:
 		}
