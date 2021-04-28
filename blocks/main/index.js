@@ -45,8 +45,8 @@ exports.ddanpago_main_block = {
 				{
 					type: 'button',
 					action_type: 'submit_action',
-					action_name: 'giwon',
-					value: 'giwon',
+					action_name: 'hope_menu',
+					value: 'hope_menu',
 					text: '기원',
 					style: 'default',
 				},
