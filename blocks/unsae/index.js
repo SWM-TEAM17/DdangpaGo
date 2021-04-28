@@ -21,7 +21,7 @@ exports.taro_selection_block = {
 					text: '1번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '1',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -29,7 +29,7 @@ exports.taro_selection_block = {
 					text: '2번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '2',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -37,7 +37,7 @@ exports.taro_selection_block = {
 					text: '3번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '3',
+					value: 'unsae',
 					style: 'primary',
 				},
 			],
@@ -50,7 +50,7 @@ exports.taro_selection_block = {
 					text: '4번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '4',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -58,7 +58,7 @@ exports.taro_selection_block = {
 					text: '5번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '5',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -66,7 +66,7 @@ exports.taro_selection_block = {
 					text: '6번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '6',
+					value: 'unsae',
 					style: 'primary',
 				},
 			],
@@ -79,7 +79,7 @@ exports.taro_selection_block = {
 					text: '7번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '7',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -87,7 +87,7 @@ exports.taro_selection_block = {
 					text: '8번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '8',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -95,7 +95,7 @@ exports.taro_selection_block = {
 					text: '9번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '9',
+					value: 'unsae',
 					style: 'primary',
 				},
 			],
@@ -108,7 +108,7 @@ exports.taro_selection_block = {
 					text: '10번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '10',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -116,7 +116,7 @@ exports.taro_selection_block = {
 					text: '11번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '11',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -124,7 +124,7 @@ exports.taro_selection_block = {
 					text: '12번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '12',
+					value: 'unsae',
 					style: 'primary',
 				},
 			],
@@ -137,7 +137,7 @@ exports.taro_selection_block = {
 					text: '13번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '13',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -145,7 +145,7 @@ exports.taro_selection_block = {
 					text: '14번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '14',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -153,7 +153,7 @@ exports.taro_selection_block = {
 					text: '15번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '15',
+					value: 'unsae',
 					style: 'primary',
 				},
 			],
@@ -166,7 +166,7 @@ exports.taro_selection_block = {
 					text: '16번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '16',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -174,7 +174,7 @@ exports.taro_selection_block = {
 					text: '17번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '17',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -182,7 +182,7 @@ exports.taro_selection_block = {
 					text: '18번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '18',
+					value: 'unsae',
 					style: 'primary',
 				},
 			],
@@ -195,7 +195,7 @@ exports.taro_selection_block = {
 					text: '19번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '19',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -203,7 +203,7 @@ exports.taro_selection_block = {
 					text: '20번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '20',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -211,7 +211,7 @@ exports.taro_selection_block = {
 					text: '21번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '21',
+					value: 'unsae',
 					style: 'primary',
 				},
 			],
@@ -224,7 +224,7 @@ exports.taro_selection_block = {
 					text: '22번',
 					action_type: 'submit_action',
 					action_name: 'select_taro',
-					value: '22',
+					value: 'unsae',
 					style: 'primary',
 				},
 				{
@@ -280,7 +280,7 @@ exports.taro_result_block = {
 		    text: '타로카드 다시 뽑기',
 			action_type: 'submit_action',
 			action_name: 'show_taro',
-			value: 'show_taro',
+			value: 'unsae',
 		    style: 'default'
 		},
 		{
@@ -288,7 +288,7 @@ exports.taro_result_block = {
 		    text: '땅파고 기능 더보기',
 			action_type: 'submit_action',
 			action_name: 'back_to_main',
-			value: 'back_to_main',
+			value: 'unsae',
 		    style: 'default'
 		}
 	],
