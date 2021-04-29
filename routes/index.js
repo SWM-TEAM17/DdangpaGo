@@ -3,20 +3,19 @@ const express = require('express');
 const Config = require('config');
 const router = express.Router();
 
-const go_home_timerController = require('../controllers/go_home_timer');
-
 const libKakaoWork = require('../libs/kakaoWork');
-const unsaeController = require('../controllers/unsae');
 const mainBlock = require('../blocks/main');
 const mainController = require('../controllers/main');
+const unsaeController = require('../controllers/unsae');
 const hopeController = require('../controllers/hope');
 const transController = require('../controllers/translator/translator.js');
 const fiboController = require('../controllers/fibo/fibo.js');
+const go_home_timerController = require('../controllers/go_home_timer');
+const godongController = require('../controllers/godong');
+
 const mongoose = require('mongoose');
 const { User } = require('../models/user');
 
-const godongController = require('../controllers/godong');
-const blocks = require('../blocks/main');
 //const godong = require('../godong');
 
 router.get('/', async (req, res, next) => {
@@ -110,6 +109,32 @@ router.post('/callback', async (req, res, next) => {
 	} catch (e) {
 		console.log(e);
 	}
+
+	res.json({ result: true });
+});
+
+router.post('/chatbot', async (req, res, next) => {
+	const users = await libKakaoWork.getUserList();
+
+	const conversations = await Promise.all(
+		users.map((user) => libKakaoWork.openConversations({ userId: user.id }))
+	);
+
+	console.log(conversations);
+	// 생성된 채팅방에 메세지 전송 (3)
+	const messages = await Promise.all([
+		conversations.map((conversation) => {
+			let tmpblock = mainBlock.ddanpago_main_block;
+			tmpblock.conversationId = conversation.id;
+			libKakaoWork.sendMessage(tmpblock);
+		}),
+	]);
+
+	res.json({
+		users,
+		conversations,
+		messages,
+	});
 });
 
 module.exports = router;

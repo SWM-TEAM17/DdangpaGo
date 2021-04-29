@@ -3,8 +3,16 @@ exports.ddanpago_main_block = {
 	text: '땅파고의 6가지 쓸데없는 기능',
 	blocks: [
 		{
+			type: 'header',
+			text: '⛏ 땅파고의 6가지 쓸데없는 기능',
+			style: 'blue',
+		},
+		{
+			type: 'divider',
+		},
+		{
 			type: 'button',
-			text: '마법의 소라고동',
+			text: '마법의 소라고동🐚',
 			action_type: 'submit_action',
 			action_name: 'godong_start',
 			value: 'godong_start',
@@ -12,7 +20,7 @@ exports.ddanpago_main_block = {
 		},
 		{
 			type: 'button',
-			text: '한국인만 알아볼수 있는 번역기',
+			text: '야민정음 번역기💬',
 			action_type: 'submit_action',
 			action_name: 'only_korean_tr',
 			value: 'only_korean_tr',
@@ -23,7 +31,7 @@ exports.ddanpago_main_block = {
 			elements: [
 				{
 					type: 'button',
-					text: '피보나치킨',
+					text: '피보나치킨🐓',
 					action_type: 'call_modal',
 					action_name: 'fibona_chiken',
 					value: 'fibona_chiken',
@@ -31,7 +39,7 @@ exports.ddanpago_main_block = {
 				},
 				{
 					type: 'button',
-					text: '퇴근시간 타이머',
+					text: '퇴근알람⏰',
 					action_type: 'call_modal',
 					action_name: 'go_home_timer',
 					value: 'timer',
@@ -47,12 +55,12 @@ exports.ddanpago_main_block = {
 					action_type: 'submit_action',
 					action_name: 'hope_menu',
 					value: 'hope_menu',
-					text: '기원',
+					text: '퇴사기원🙏',
 					style: 'default',
 				},
 				{
 					type: 'button',
-					text: '운세 뽑기',
+					text: '타로뽑기🔯',
 					style: 'default',
 					action_type: 'submit_action',
 					action_name: 'show_taro',

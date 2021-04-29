@@ -23,7 +23,7 @@ exports.taro_controller = async ({ req, res, next }) => {
 			response.blocks[1].text = taro_result.keyword;
 			response.blocks[2].text = taro_result.define;
 			response.blocks[4].text = taro_result.cons;
-			response.blocks[5].url = taro_img_url;
+			response.blocks[5].url = taro_img_url;	
 			break;
 		case 'back_to_main':
 			response = mainBlock.ddanpago_main_block;
@@ -34,13 +34,14 @@ exports.taro_controller = async ({ req, res, next }) => {
 
 	response.conversationId = message.conversation_id;
 	
+	console.log(response);
 	try {
 		await libKakaoWork.sendMessage(response);
 	} catch (error) {
 		console.log(error);
 	}
 
-	return res.json(response);
+	return;
 };
 
 const get_day_from_server_time = ({ action_time }) => {
@@ -78,6 +79,6 @@ const get_taro_result = async ({ selected_num, day }) => {
 		data = data.substring(1, data.length);
 	}
 	taro_result = JSON.parse(data);
-	console.log(taro_result);
+	// console.log(taro_result);
 	return taro_result;
 };

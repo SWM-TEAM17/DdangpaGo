@@ -1,23 +1,23 @@
 exports.ask_modal = {
 	view: {
-			title: '마법의 소라고동',
-			accept: '확인',
-			decline: '취소',
-			value: 'godong_question',
-			blocks: [
-				{
-					type: 'label',
-					text: '*_마법 고동님, 물어볼 게 있는데요,_*',
-					markdown: true,
-				},
-				{
-					type: 'input',
-					name: 'question',
-					required: false,
-					placeholder: '질문을 입력해주세요.',
-				},
-			],
-		},
+		title: '마법의 소라고동',
+		accept: '확인',
+		decline: '취소',
+		value: 'godong_question',
+		blocks: [
+			{
+				type: 'label',
+				text: '*_마법 고동님, 물어볼 게 있는데요,_*',
+				markdown: true,
+			},
+			{
+				type: 'input',
+				name: 'question',
+				required: false,
+				placeholder: '질문을 입력해주세요.',
+			},
+		],
+	},
 };
 
 exports.start_message = {
@@ -25,8 +25,11 @@ exports.start_message = {
 	text: '마법의 소라고동',
 	blocks: [
 		{
-		  "type": "image_link",
-		  "url": "https://swm-chatbot-mptw3r-mxrmlo.run.goorm.io/godong/start.jpg",
+			type: 'image_link',
+			url: 'https://swm-chatbot-mptw3r-mxrmlo.run.goorm.io/godong/start.jpg',
+		},
+		{
+			type: 'divider',
 		},
 		{
 			type: 'button',
@@ -36,7 +39,7 @@ exports.start_message = {
 			style: 'default',
 		},
 	],
-}
+};
 
 exports.answer_message = {
 	conversationId: 1,
@@ -52,7 +55,7 @@ exports.answer_message = {
 			markdown: true,
 		},
 		{
-			type: "divider"
+			type: 'divider',
 		},
 		{
 			type: 'action',
@@ -69,10 +72,10 @@ exports.answer_message = {
 					action_type: 'submit_action',
 					action_name: 'menu',
 					value: 'menu',
-					text: '땅파고 기능 더보기',
+					text: '또파고⛏',
 					style: 'default',
 				},
 			],
 		},
 	],
-}
+};

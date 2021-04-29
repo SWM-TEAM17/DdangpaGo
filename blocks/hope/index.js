@@ -102,7 +102,7 @@ exports.hope_menu_block = {
 		},
 		{
 			type: 'button',
-			text: '메뉴로 돌아가기',
+			text: '또파고⛏',
 			action_type: 'submit_action',
 			action_name: 'menu',
 			value: 'menu',
