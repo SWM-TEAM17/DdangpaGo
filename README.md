@@ -93,13 +93,13 @@ https://fibonachicken.herokuapp.com/ </br></br>
 직장인이라면 누구나 가슴속에 사표 한 장 쯤 품고 있잖아요?</br>
 오늘로 퇴사 기원 25일차... 그리고 우리 회사에서 나의 퇴사 기원 랭킹은?</br></br>
 <p align="center">
-<img src = "https://user-images.githubusercontent.com/45932570/116431813-13205400-a883-11eb-84a2-3d6c754d7311.png"></br>
+<img src = "https://user-images.githubusercontent.com/45932570/116591453-cce9f400-a959-11eb-923a-8c2167c82790.png"></br>
 <i>퇴사 기원 25일차</i>
 </p></br>
 
 ### 실행화면
 <p align="center">
-<img src = "https://user-images.githubusercontent.com/45932570/116523221-f4689e80-a910-11eb-87de-7160a54ae147.png"></br>
+<img src = "https://user-images.githubusercontent.com/45932570/116591597-f60a8480-a959-11eb-9953-d09f3651767a.png"></br>
 '퇴사 기원하기'를 선택하고, '퇴사하고 싶으신가요?' 질문에 답변하면 기원에 성공합니다.</br></br>
 <img src = "https://user-images.githubusercontent.com/45932570/116523236-fb8fac80-a910-11eb-94ea-db21dcb70b95.png"></br>
 '기원 랭킹 보기'를 선택하면, 퇴사 기원 랭킹을 볼 수 있습니다.</br></br>
