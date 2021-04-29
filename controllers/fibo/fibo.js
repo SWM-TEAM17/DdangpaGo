@@ -51,7 +51,7 @@ exports.fibo_message = async ({req, res, next}) => {
 					},
 					{
 						type: 'text',
-						text: '*' + actions.people + ' 명*이 배부르게 먹으려면',
+						text: '*' + actions.people.replace(/[^0-9]/g,'') + ' 명*이 배부르게 먹으려면',
 						markdown: true,
 					},
 					{
@@ -80,7 +80,7 @@ exports.fibo_message = async ({req, res, next}) => {
 								action_type: 'submit_action',
 								action_name: 'menu',
 								value: 'menu',
-								text: '뒤로가기',
+								text: '또파고⛏',
 								style: 'default',
 							},
 						],
@@ -94,6 +94,7 @@ exports.fibo_message = async ({req, res, next}) => {
 
 //피보나 치킨 수 구하기
 function fibo(number) {
+	number = number.replace(/[^0-9]/g,'');
 	number *= 1;
 	var d = [0, 1, 1],
 		i,

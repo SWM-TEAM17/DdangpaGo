@@ -4,6 +4,7 @@ const axios = require('axios');
 const Config = require('config');
 const mongoose = require('mongoose');
 const { User } = require('../../models/user');
+const hopeImageArray = ['hope.gif', 'hope2.jpg', 'hope3.jpg'];
 
 mongoose
 	.connect(
@@ -48,7 +49,7 @@ exports.hope_modal = async ({ req, res, next }) => {
 			if (true) {
 				// ** 중요 잠시 테스트 때문에 true로 바꿔둠
 				response = hopeBlock.hope_problem_solve_pass_block;
-				response.view.blocks[0].text = `*${user.name}*님은 퇴사 기원 ${user.hope_val}일차 입니다.`;
+				response.view.blocks[0].text = `*${user.name}*님의 ${user.hope_val}번째 퇴사 기원 입니다.`;
 			} else {
 				response = hopeBlock.hope_problem_solve_reject_block;
 			}
@@ -100,6 +101,7 @@ exports.hope_message = async ({ req, res, next }) => {
 			break;
 		case 'hope_problem':
 			const user = await User.findOne({ user_id: react_user_id });
+			const image = hopeImageArray[Math.floor(Math.random() * hopeImageArray.length)];
 
 			await User.replaceOne(
 				{ user_id: user.user_id },
@@ -112,8 +114,9 @@ exports.hope_message = async ({ req, res, next }) => {
 			);
 
 			response = hopeBlock.hope_problem_block;
-			response.blocks[2].content.text = `${actions.answer}`;
-			response.blocks[4].text = `*${user.name}* 퇴사 기원 ${user.hope_val + 1}일째`;
+			response.blocks[2].text = `${actions.answer}! 당장이라도 퇴사하고 싶어요`;
+			response.blocks[3].text = `*${user.name}*님의 ${user.hope_val + 1}번째 퇴사 기원`;
+			response.blocks[4].url = `https://swm-chatbot-mptw3r-mxrmlo.run.goorm.io/hope/${image}`
 			break;
 		default:
 	}

@@ -1,173 +1,88 @@
 const libKakaoWork = require('../../libs/kakaoWork');
-const axios = require('axios');
-const Config = require('config');
-const { User } = require('../../models/user');
+const blocks = require('../../blocks/translator');
+const mainBlock = require('../../blocks/main');
 
-
-exports.trans_modal = async ({ req, res, next }) => {
+exports.translator_modal = async ({ req, res, next }) => {
 	const { message, value } = req.body;
-
-	switch (value) {
-		case 'korean_translator':
-			// 설문조사용 모달 전송 (3)
-			return res.json({
-				view: {
-					title: '한국인만 알아볼 수 있는 번역기',
-					accept: '번역하기',
-					decline: '취소',
-					value: 'korean_translator_results',
-					blocks: [
-					{
-						type: "select",
-						name: "translate_option",
-						options: [
-						{
-						  text: "유튜쁘 떘끌 외쿸인뜰이 몼알아뽀꼐 하끼",
-						  value: "1"
-						},
-						{
-						  text: "캠릿브지 대학의 연결구과에 따르면",
-						  value: "2"
-						},
-						{
-						  text: "야민정음",
-						  value: "3"
-						},     
-
-						],
-						placeholder: "사용 목적을 말해주세요."
-					},
-					{
-						type: 'label',
-						text: '번역하고자 하는 문장을 입력하세요.',
-						markdown: false,
-					},
-					{
-						type: 'input',
-						name: 'before_translate',
-						required: false,
-						placeholder: 'ex) 이 편지는 영국에서부터 시작되어 일년에 한 바퀴를 돌며 사람들에게 행운을 주었고...',
-					},
-					],
-				},
-			});
-			break;
-		default:
-	}
-
-	res.json({});
-};
-
-exports.trans_message = async (req, res, next) => {
-	const { message, actions, action_time, value } = req.body;
-	console.log(req);
-	switch (value) {
-	case 'callStartScreen':
-	await libKakaoWork.sendMessage({
-	conversationId: message.conversation_id,
-		text: "땅파고 메시지",
-	blocks: [
-	{
-	type: "header",
-	text: "땅파고👷",
-	style: "blue"
-	},
-	{
-	type: "button",
-	text: "마법의 소라고동",
-	style: "default"
-	},
-	{
-					type: "button",
-					text: "한국인만 알아볼수 있는 번역기",
-					action_type: 'call_modal',
-	value: 'korean_translator',
-					style: "default"
-				},
-				{
-					type: "button",
-					text: "피보나치킨",
-					style: "default"
-				},
-				{
-					type: "button",
-					text: "퇴근시간 타이머",
-					style: "default"
-				},
-				{
-					type: "button",
-					text: "기원",
-					style: "default"
-				},
-				{
-					type: "button",
-					text: "운세 뽑기",
-					style: "default"
-				}
-			]})
 	
-      
-	break;		
-			
-    case 'korean_translator_results':
-			
-	//console.log(req.body);
-      // 설문조사 응답 결과 메세지 전송 (3)
-      await libKakaoWork.sendMessage({
-        conversationId: message.conversation_id,
-        text: '한국인만 알아볼 수 있는 번역 완료!',
-        blocks: [
-          {
-            type: 'text',
-            text: '*🤷한국인만 알아볼 수 있는 번역기 *',
-            markdown: true,
-          },
-          {
-            type: 'text',
-            text: '*입력한 내용*',
-            markdown: true,
-          },
-		  {
-            type: 'text',
-            text: actions.before_translate,
-            markdown: false,
-          },
-		  {
-            type: 'text',
-            text: '*번역 결과!*',
-            markdown: true,
-          },
-		  {
-            type: 'text',
-            text: translation(actions.before_translate, actions.translate_option),
-            markdown: false,
-          },
-		  {
-		    type: "action",
-      	    elements: [
-          {
-          	type: "button",
-          	text: "한 번 더 하기",
-			action_type: 'call_modal',
-            value: 'korean_translator',
-          	style: "primary"
-          },
-          {
-          	type: "button",
-          	text: "땅파고 기능 더보기",
-			action_type: 'submit_action',
-			value: 'callStartScreen',
-          	style: "default"
-          }
-        ]	
-	  }	
-        ],
-      });
-      break;
-    default:
-  }
+	let response = {};
 
-  res.json({ result: true });
+	response = blocks.ask_modal;
+
+	response.conversationId = message.conversation_id;
+	res.json(response);
+	return;
+}
+
+exports.translator_message = async ({req, res, next}) => {
+	const { message, actions, action_time, value } = req.body;
+	switch (value) {
+		case 'main':
+			let tmpblock = mainBlock.ddanpago_main_block;
+			tmpblock.conversationId = message.conversation.id;
+			await libKakaoWork.sendMessage(tmpblock);
+			break;
+    	case 'trans_ask_message':
+			
+			await libKakaoWork.sendMessage({
+        		conversationId: message.conversation_id,
+        		text: '한국인만 알아볼 수 있는 번역 완료!',
+        		blocks: [
+          		{
+            		type: 'text',
+            		text: '*🤷야민정음 번역기*',
+            		markdown: true,
+          		},
+				{
+					type: 'image_link',
+					url: 'https://swm-chatbot-mptw3r-mxrmlo.run.goorm.io/translator/Sejong.jpg',
+				},
+          		{
+            		type: 'text',
+            		text: '*입력한 내용*',
+            		markdown: true,
+          		},
+		  		{
+            		type: 'text',
+            		text: actions.before_translate,
+            		markdown: false,
+          		},
+		  		{
+            		type: 'text',
+            		text: '*번역 결과!*',
+            		markdown: true,
+          		},
+		  		{
+            		type: 'text',
+            		text:translation(actions.before_translate, actions.translate_option),
+            		markdown: false,
+          		},
+		  		{
+		    		type: "action",
+      	    		elements: [
+          			{
+          				type: "button",
+          				text: "한 번 더 하기",
+						action_type: 'call_modal',
+            			value: 'trans_ask_message',
+          				style: "primary"
+          			},
+          			{
+						type: 'button',
+						action_type: 'submit_action',
+						action_name: 'menu',
+						value: 'menu',
+						text: '또과고⛏',
+						style: 'default',
+          			}
+	  				]
+				}	
+        		],
+      		});
+        break;	
+    	default:
+			break;
+    }
 };
 
 
@@ -219,8 +134,8 @@ var mergeChar = function(_seperatedChar){
 }
 
 
-//문자열 번역
-var translation = function(korean){
+//초성과 중성, 중성을 시프트 키 누른 것처럼 요상하게 변경
+var transShiftEffect = function(korean){
 	
 	var ret = '';
 	for(var i = 0 ; i < korean.length; i++){
@@ -234,7 +149,28 @@ var translation = function(korean){
 		//초성 중성 종성 분리
 		var seperatedChar = seperate(korean[i]);
 		
-		//중성 모음을 변경
+		//초성변경
+		switch(seperatedChar.first){
+			case "ㄱ":
+				seperatedChar.first = 'ㄲ';
+			break;
+			case "ㄷ":
+				seperatedChar.first = 'ㄸ';
+			break; 
+			case "ㅂ":
+				seperatedChar.first = 'ㅃ';
+			break;
+			case "ㅅ":
+				seperatedChar.first = 'ㅆ';
+			break;
+			case "ㅈ":
+				seperatedChar.first = 'ㅉ';
+			break;
+			default:
+			break;
+		}
+		
+		//중성변경
 		switch(seperatedChar.second){
 			case "ㅏ":
 				seperatedChar.second = 'ㅑ';
@@ -263,8 +199,6 @@ var translation = function(korean){
 			case "ㅗ":
 				seperatedChar.second = 'ㅛ';
 			break;
-			case "ㅘ":
-			break;
 			case "ㅙ":
 				seperatedChar.second = 'ㅚ';
 			break;
@@ -280,28 +214,187 @@ var translation = function(korean){
 			case "ㅝ":
 				seperatedChar.second = 'ㅞ';
 			break;
-			case "ㅞ":
 			break;
-			case "ㅟ":
+			default:
 			break;
-			case "ㅠ":
-				seperatedChar.second = 'ㅜ';
+		}
+		
+		//종성변경
+		switch(seperatedChar.third){
+			case "":
+				if(Math.random() > 0.7)
+					seperatedChar.third = fin[Math.floor(Math.random() * 28)];
 			break;
-			case "ㅡ":
+			case "ㄱ":
+				seperatedChar.third = "ㄲ";
 			break;
-			case "ㅢ":
+			case "ㄲ":
+				seperatedChar.third = "ㄳ";
 			break;
-			case "ㅣ":
+			case "ㄴ":
+				seperatedChar.third = "ㄵ";
+			break;
+			case "ㄵ":
+				seperatedChar.third = "ㄴ";
+			break;
+			case "ㄶ":
+				seperatedChar.third = "ㄴ";
+			break;
+			case "ㄶ":
+				seperatedChar.third = "ㄴ";
+			break;
+			case "ㄹ":
+				seperatedChar.third = "ㄾ";
+			break;
+			case "ㅂ":
+				seperatedChar.third = "ㅄ";
+			break;
+			case "ㅅ":
+				seperatedChar.third = "ㅆ";
+			break;
+			default:
 			break;
 		}
 		
 		//초성 중성 종성 병합
 		ret += mergeChar(seperatedChar);
 	}
-//	console.log(ret);
+	return ret;
+};
+
+//'캠릿브지'처럼 가운데 두 글자 바꾸기 
+var transCambridge = function(korean){
+	
+	var ret = '';
+	var words = korean.split(' ');	//단어를 기준으로 나누기
+
+	for(var i = 0 ; i < words.length; i++){
+		//길이가 4이하인 단어는 변경 안 함
+		if(words[i].length < 4){
+			ret += words[i]+' ';
+			continue;
+		}
+		
+		//단어 안의 두 번째, 세 번째 문자 swap
+		var temp = words[i][2];
+		words[i] = words[i].replace(words[i][2], words[i][1]);
+		words[i] = words[i].replace(words[i][1], temp);
+		
+		ret += words[i]+' ';
+	}
+	return ret.slice(0,-1);	//마지막 공백 문자 제거
+};
+
+var transYamin = function(korean){
+	
+	var ret = '';
+	for(var i = 0 ; i < korean.length; i++){
+
+		//'가'보다 작거나 '힣'보다 큰 유니코드는 분리X
+		if(korean[i].charCodeAt(0) < 44032 || korean[i].charCodeAt(0) > 55203){
+			ret +=korean[i];
+			continue;
+		}
+		
+		//초성 중성 종성 분리
+		var seperatedChar = seperate(korean[i]);
+		
+		//https://namu.wiki/w/%EC%95%BC%EB%AF%BC%EC%A0%95%EC%9D%8C#s-3.1 참고
+		if(seperatedChar.first == 'ㄷ' && seperatedChar.second =='ㅐ'){
+			seperatedChar.first ='ㅁ';
+			seperatedChar.second ='ㅓ';
+		}
+		else if(seperatedChar.first=='ㅁ' && seperatedChar.second =='ㅓ'){
+			seperatedChar.first ='ㄷ';
+			seperatedChar.second='ㅐ';
+		}
+		else if(seperatedChar.first == 'ㅁ' && seperatedChar.second =='ㅕ'){
+			seperatedChar.first ='ㄸ';
+			seperatedChar.second ='ㅣ';
+		}
+		else if(seperatedChar.first=='ㄸ' && seperatedChar.second =='ㅣ'){
+			seperatedChar.first ='ㅁ';
+			seperatedChar.second='ㅕ';
+		}
+		else if(seperatedChar.first=='ㄱ' && seperatedChar.second =='ㅟ'){
+			seperatedChar.first ='ㅋ';
+			seperatedChar.second='ㅓ';
+		}
+		else if(seperatedChar.first=='ㅋ' && seperatedChar.second =='ㅓ'){
+			seperatedChar.first ='ㄱ';
+			seperatedChar.second='ㅟ';
+		}
+		else if(seperatedChar.first=='ㅍ' && seperatedChar.second =='ㅏ'){
+			seperatedChar.first ='ㄱ';
+			seperatedChar.second='ㅘ';
+		}
+		else if(seperatedChar.first=='ㄱ' && seperatedChar.second =='ㅘ'){
+			seperatedChar.first ='ㅍ';
+			seperatedChar.second='ㅏ';
+		}		
+		else if(seperatedChar.first=='ㅍ' && seperatedChar.second =='ㅣ'){
+			seperatedChar.first ='ㄲ';
+			seperatedChar.second='ㅢ';
+		}
+		else if(seperatedChar.first=='ㅂ' && seperatedChar.second =='ㅣ'){
+			seperatedChar.first ='ㄴ';
+			seperatedChar.second='ㅔ';
+		}
+		else if(seperatedChar.first=='ㄴ' && seperatedChar.second =='ㅔ'){
+			seperatedChar.first ='ㅂ';
+			seperatedChar.second='ㅣ';
+		}
+		else if(seperatedChar.first=='ㅇ' && seperatedChar.second =='ㅠ' && seperatedChar.third==''){
+			seperatedChar.first ='ㅇ';
+			seperatedChar.second='ㅡ';
+			seperatedChar.third='ㄲ';
+		}
+		else if(seperatedChar.first=='ㅇ' && seperatedChar.second =='ㅡ' && seperatedChar.third=='ㄲ'){
+			seperatedChar.first ='ㅇ';
+			seperatedChar.second='ㅠ';
+			seperatedChar.third='';
+		}
+		else if(seperatedChar.first=='ㅃ' && seperatedChar.second =='ㅣ'){
+			seperatedChar.first ='ㅂ';
+			seperatedChar.second='ㅖ';
+		}
+		else if(seperatedChar.first=='ㅂ' && seperatedChar.second =='ㅖ' ){
+			seperatedChar.first ='ㅃ';
+			seperatedChar.second='ㅣ';
+		}
+		else if(seperatedChar.first=='ㅇ' && seperatedChar.second =='ㅟ' && seperatedChar.third==''){
+			seperatedChar.first ='ㅇ';
+			seperatedChar.second='ㅣ';
+			seperatedChar.third='ㄲ';
+		}
+		else if(seperatedChar.first=='ㅇ' && seperatedChar.second =='ㅣ' && seperatedChar.third=='ㄲ'){
+			seperatedChar.first ='ㅇ';
+			seperatedChar.second='ㅟ';
+			seperatedChar.third='';
+		}
+		
+		//초성 중성 종성 병합
+		ret += mergeChar(seperatedChar);
+	}
 	return ret;
 };
 
 
-//translation('이 편지는 영국에서 시작되어');
-module.exports = translation;
+
+var translation = function(korean, option){
+	switch(option){
+		
+		//자음 모음 변경
+		case "1":
+			return transShiftEffect(korean);
+		
+		//캠브릿지 연구 결과
+		case "2":
+			return transCambridge(korean);
+		
+		//야민정음
+		case "3":
+			return transYamin(korean);
+	}
+	
+}

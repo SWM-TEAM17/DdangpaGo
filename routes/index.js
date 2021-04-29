@@ -5,6 +5,7 @@ const router = express.Router();
 
 const libKakaoWork = require('../libs/kakaoWork');
 const mainBlock = require('../blocks/main');
+const goHomeBlock = require('../blocks/go_home_timer');
 const mainController = require('../controllers/main');
 const unsaeController = require('../controllers/unsae');
 const hopeController = require('../controllers/hope');
@@ -16,22 +17,21 @@ const godongController = require('../controllers/godong');
 const mongoose = require('mongoose');
 const { User } = require('../models/user');
 
-//const godong = require('../godong');
 
-router.get('/', async (req, res, next) => {
+router.post('/chatbot', async (req, res, next) => {
 	const users = await libKakaoWork.getUserList();
 
 	const conversations = await Promise.all(
 		users.map((user) => libKakaoWork.openConversations({ userId: user.id }))
 	);
 
-	console.log(conversations);
 	// 생성된 채팅방에 메세지 전송 (3)
 	const messages = await Promise.all([
 		conversations.map((conversation) => {
-			let tmpblock = mainBlock.ddanpago_main_block;
+			let tmpblock = mainBlock.ddanpago_intro_block;
 			tmpblock.conversationId = conversation.id;
 			libKakaoWork.sendMessage(tmpblock);
+			console.log(tmpblock);
 		}),
 	]);
 
@@ -53,15 +53,15 @@ router.post('/request', async (req, res, next) => {
 				await hopeController.hope_modal({ req, res, next });
 				break;
 			case 'tran':
-				await transController.trans_modal({ req, res, next });
+				await transController.translator_modal({ req, res, next });
 				break;
 			case 'fibo':
 				await fiboController.fibo_modal({ req, res, next });
 				break;
 			case 'time':
-				option = go_home_timerController.option;
+				option = goHomeBlock.option;
 				return res.json({
-					view: go_home_timerController.timer_post_request_message,
+					view: goHomeBlock.timer_post_request_message,
 				});
 				break;
 			case 'godo':
@@ -90,7 +90,7 @@ router.post('/callback', async (req, res, next) => {
 				await hopeController.hope_message({ req, res, next });
 				break;
 			case 'tran':
-				await transController.trans_message({ req, res, next });
+				await transController.translator_message({ req, res, next });
 				break;
 			case 'fibo':
 				await fiboController.fibo_message({ req, res, next });
@@ -111,30 +111,6 @@ router.post('/callback', async (req, res, next) => {
 	}
 
 	res.json({ result: true });
-});
-
-router.post('/chatbot', async (req, res, next) => {
-	const users = await libKakaoWork.getUserList();
-
-	const conversations = await Promise.all(
-		users.map((user) => libKakaoWork.openConversations({ userId: user.id }))
-	);
-
-	console.log(conversations);
-	// 생성된 채팅방에 메세지 전송 (3)
-	const messages = await Promise.all([
-		conversations.map((conversation) => {
-			let tmpblock = mainBlock.ddanpago_main_block;
-			tmpblock.conversationId = conversation.id;
-			libKakaoWork.sendMessage(tmpblock);
-		}),
-	]);
-
-	res.json({
-		users,
-		conversations,
-		messages,
-	});
 });
 
 module.exports = router;

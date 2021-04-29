@@ -285,10 +285,10 @@ exports.taro_result_block = {
 		},
 		{
 		    type: 'button',
-		    text: '땅파고 기능 더보기',
+		    text: '또파고⛏',
 			action_type: 'submit_action',
-			action_name: 'back_to_main',
-			value: 'unsae',
+			action_name: 'menu',
+			value: 'menu',
 		  style: 'default'
 		}
 	],

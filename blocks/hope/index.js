@@ -10,19 +10,15 @@ exports.hope_ranking_block = {
 
 exports.hope_problem_solve_pass_block = {
 	view: {
-		title: 'modal title',
+		title: '퇴사 기원',
 		accept: '확인',
 		decline: '취소',
 		value: 'hope_problem',
 		blocks: [
 			{
 				type: 'label',
-				text: 'dump',
-				markdown: true,
-			},
-			{
-				type: 'label',
 				text: '사직서 던지는 그날까지! 오늘도 퇴사를 기원하세요',
+				markdown: true,
 			},
 			{
 				type: 'select',
@@ -71,17 +67,14 @@ exports.hope_problem_solve_reject_block = {
 
 exports.hope_menu_block = {
 	conversationId: 1,
-	text: 'Push alarm message',
+	text: '퇴사 기원',
 	blocks: [
 		{
-			type: 'header',
-			text: '퇴사 기원하기',
-			style: 'blue',
+			type: 'image_link',
+			url: 'https://swm-chatbot-mptw3r-mxrmlo.run.goorm.io/hope/main.jpg',
 		},
 		{
-			type: 'text',
-			text: '원하시는 메뉴를 선택해주세요',
-			markdown: true,
+			type: 'divider',
 		},
 		{
 			type: 'button',
@@ -113,7 +106,7 @@ exports.hope_menu_block = {
 
 exports.hope_problem_block = {
 	conversationId: 1,
-	text: 'Push alarm message',
+	text: '퇴사 기원에 성공하였습니다!',
 	blocks: [
 		{
 			type: 'text',
@@ -126,24 +119,43 @@ exports.hope_problem_block = {
 			markdown: true,
 		},
 		{
-			type: 'description',
-			term: '선택',
-			content: {
-				type: 'text',
-				text: 'dump',
-				markdown: false,
-			},
-			accent: true,
-		},
-		{
 			type: 'text',
-			text: '퇴사 기원에 성공하였습니다! 🎉',
+			text: '네! 당장이라도 퇴사하고 싶어요',
 			markdown: true,
 		},
 		{
 			type: 'text',
 			text: 'dunp',
 			markdown: true,
+		},
+		{
+			type: 'image_link',
+			url: `https://swm-chatbot-mptw3r-mxrmlo.run.goorm.io/hope/hope.gif`
+		},
+		{
+			type: 'button',
+			text: '한번 더 퇴야호~~',
+			action_type: 'call_modal',
+			value: 'hope_problem_solve',
+			style: 'default',
+		},
+		{
+			type: 'button',
+			text: '기원 랭킹 보기',
+			action_type: 'call_modal',
+			value: 'hope_ranking',
+			style: 'default',
+		},
+		{
+			type: 'divider',
+		},
+		{
+			type: 'button',
+			text: '또파고⛏',
+			action_type: 'submit_action',
+			action_name: 'menu',
+			value: 'menu',
+			style: 'default',
 		},
 	],
 };
