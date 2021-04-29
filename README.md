@@ -93,7 +93,7 @@ https://fibonachicken.herokuapp.com/ </br></br>
 직장인이라면 누구나 가슴속에 사표 한 장 쯤 품고 있잖아요?</br>
 오늘로 퇴사 기원 25일차... 그리고 우리 회사에서 나의 퇴사 기원 랭킹은?</br></br>
 <p align="center">
-<img src = "https://user-images.githubusercontent.com/45932570/116591453-cce9f400-a959-11eb-923a-8c2167c82790.png"></br>
+<img src = "https://user-images.githubusercontent.com/45932570/116591676-15091680-a95a-11eb-90ee-005def0d1450.png"></br>
 <i>퇴사 기원 25일차</i>
 </p></br>
 
