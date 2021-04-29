@@ -44,6 +44,7 @@
 모달에서 사용 목적을 선택하신 후, 번역하려 하는 문장을 입력해주세요.</br></br>
 <img src = "https://user-images.githubusercontent.com/45932570/116557427-65bc4780-a939-11eb-8e96-2d60fd84ba6d.png"></br>
 땅파고가 입력한 문장을 한국인만 알아볼 수 있게 번역해줍니다.</br></br>
+<img src = "https://user-images.githubusercontent.com/45932570/116568978-ed0eb880-a943-11eb-84d5-ea4a7cfee4a7.png"></br></br>
 </p>
 
 ---
