@@ -58,7 +58,7 @@ exports.hope_modal = async ({ req, res, next }) => {
 			const users = await User.find({}).sort({ hope_val: -1 });
 			response = hopeBlock.hope_ranking_block;
 			response.view.blocks = [];
-			for (let i = 0; i < users.length && i < 10; i++) {
+			for (let i = 0; i < users.length && i < 15; i++) {
 				response.view.blocks.push({
 					type: 'label',
 					text: `*${users[i].hope_val}점* - ${users[i].name}`,

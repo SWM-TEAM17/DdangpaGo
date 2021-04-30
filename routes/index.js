@@ -20,7 +20,8 @@ const { User } = require('../models/user');
 
 router.post('/chatbot', async (req, res, next) => {
 	const users = await libKakaoWork.getUserList();
-
+	// console.log(users);
+	
 	const conversations = await Promise.all(
 		users.map((user) => libKakaoWork.openConversations({ userId: user.id }))
 	);
@@ -31,7 +32,6 @@ router.post('/chatbot', async (req, res, next) => {
 			let tmpblock = mainBlock.ddanpago_intro_block;
 			tmpblock.conversationId = conversation.id;
 			libKakaoWork.sendMessage(tmpblock);
-			console.log(tmpblock);
 		}),
 	]);
 

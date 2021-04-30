@@ -89,18 +89,10 @@ exports.ddanpago_main_block = {
 			},
 			image: {
 				type: 'image_link',
-				url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Info_icon-72a7cf.svg/64px-Info_icon-72a7cf.svg.png',
+				url:
+					'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Info_icon-72a7cf.svg/64px-Info_icon-72a7cf.svg.png',
 			},
 		},
-		// {
-		// 	type: 'button',
-		// 	text: '사용법 보러가기',
-		// 	action_type: 'open_system_browser',
-		// 	action_name: 'readme',
-		// 	value: decodeURIComponent('https://github.com/SWM-TEAM17/DdangpaGo#readme'),
-		// 	style: 'default',
-		// },
-
 	],
 };
 
@@ -117,7 +109,7 @@ exports.ddanpago_intro_block = {
 			term: '이름',
 			content: {
 				type: 'text',
-				text: '땅파고',
+				text: '땅파고 😉',
 				markdown: true,
 			},
 			accent: false,
@@ -127,7 +119,7 @@ exports.ddanpago_intro_block = {
 			term: '나이',
 			content: {
 				type: 'text',
-				text: '2x살',
+				text: '2X살 🧑‍💻',
 				markdown: false,
 			},
 			accent: false,
@@ -137,7 +129,7 @@ exports.ddanpago_intro_block = {
 			term: '직업',
 			content: {
 				type: 'text',
-				text: '취준생??? or 백수?????',
+				text: '취준생?? or 백수💦',
 				markdown: false,
 			},
 			accent: false,
@@ -147,14 +139,15 @@ exports.ddanpago_intro_block = {
 			term: '특기',
 			content: {
 				type: 'text',
-				text: '삽질?????',
+				text: '삽질 ⛏',
 				markdown: false,
 			},
 			accent: false,
 		},
 		{
 			type: 'text',
-			text: '땅파고는 대학 동기였던 알파고의 \n구글 취업소식을 듣게 된다.\n\n자극을 받은 땅파고는 취업을 위해\n대학 생활동안 갈고 닦았던 \n6가지 스킬을 자소서에 적기로 하는데...',
+			text:
+				'4학년에 올라가는 땅파고는 대학 동기였던 알파고의 구글 코리아 취업소식을 듣게 된다.\n\n학창 시절 주구장창 바둑 기보만 보던 알파고의 성공에 자극을 받은 땅파고는 자신만의 스킬을 연마하기로 다짐한다. 그동안 갈고 닦았던 6가지 스킬을 자소서에 적기로 하는데... \n\n적게 일하고 많이 벌자! 무료한 주 52시간을 땅파고로 녹여보자!',
 			markdown: true,
 		},
 		{
