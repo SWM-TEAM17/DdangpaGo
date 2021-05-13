@@ -129,7 +129,8 @@ https://unse.daily.co.kr/?p=tarot </br>
 <p align="center">
 <img src = "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F2ab5ef2a-21d1-4c04-8149-50ad42e85da6%2F001.png?table=block&id=47b7caf9-7262-4f85-9400-44fea532aaeb&width=2520&userId=ec834ace-50e4-4101-a555-0e3139500ef9&cache=v2" height="50%" width="50%"></br>
 
-#### <center>카카오 엔터프라이즈 후원 소프트웨어 마에스트로 미니프로젝트 1등상(21. 4. 19.(월) ~ 30.(금))</center>
+카카오 엔터프라이즈 후원 소프트웨어 마에스트로 미니프로젝트 1등상(21. 4. 19.(월) ~ 30.(금))
+https://www.notion.so/69afdabdc6e44e6dbdf7f6e5264b94e3
 </br></br>
 </p>
 
