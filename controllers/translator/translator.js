@@ -2,6 +2,7 @@ const libKakaoWork = require('../../libs/kakaoWork');
 const blocks = require('../../blocks/translator');
 const mainBlock = require('../../blocks/main');
 
+//modal requset
 exports.translator_modal = async ({ req, res, next }) => {
 	const { message, value } = req.body;
 	
@@ -14,6 +15,7 @@ exports.translator_modal = async ({ req, res, next }) => {
 	return;
 }
 
+//message request
 exports.translator_message = async ({req, res, next}) => {
 	const { message, actions, action_time, value } = req.body;
 	switch (value) {
@@ -380,7 +382,7 @@ var transYamin = function(korean){
 };
 
 
-
+//options
 var translation = function(korean, option){
 	switch(option){
 		
